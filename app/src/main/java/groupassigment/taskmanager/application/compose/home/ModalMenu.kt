@@ -3,6 +3,7 @@ package groupassigment.taskmanager.application.compose.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
@@ -58,12 +59,12 @@ fun ModalMenu(drawerState: DrawerState, onDestinationClicked: (String) -> Unit) 
         )
         // Navigate to Register
         NavButton(
-            icon = Icons.Default.Person,
-            text = "Register",
+            icon = Icons.Default.AccountCircle,
+            text = "My Profile",
             onClick = {
                 scope.launch {
                     drawerState.close()
-                    onDestinationClicked("register")
+                    onDestinationClicked("profile")
                 }
             }
         )

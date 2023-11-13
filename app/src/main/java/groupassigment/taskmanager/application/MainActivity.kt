@@ -50,6 +50,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import groupassigment.taskmanager.application.auth.GoogleAuthUiClient
 import groupassigment.taskmanager.application.compose.home.ModalMenu
 import groupassigment.taskmanager.application.compose.task.TaskList
+import groupassigment.taskmanager.application.compose.user.ProfileScreen
 import groupassigment.taskmanager.application.compose.user.RegisterScreen
 import groupassigment.taskmanager.application.compose.user.SignInScreen
 import groupassigment.taskmanager.application.viewmodels.SignInViewModel
@@ -156,6 +157,11 @@ class MainActivity : ComponentActivity() {
                                             val state by viewModel.state
                                                 .collectAsStateWithLifecycle()
 
+                                            LaunchedEffect(key1 = Unit) {
+                                                if(googleAuthUiClient.getSignedInUser() != null)
+                                                    navController.navigate("profile")
+                                            }
+
                                             val launcher = rememberLauncherForActivityResult(
                                                 contract = ActivityResultContracts.StartIntentSenderForResult(),
                                                 onResult = { result ->
@@ -178,6 +184,9 @@ class MainActivity : ComponentActivity() {
                                                         "Sign in successful",
                                                         Toast.LENGTH_LONG
                                                     ).show()
+
+                                                    navController.navigate("profile")
+                                                    viewModel.resetState()
                                                 }
                                             }
 
@@ -199,10 +208,21 @@ class MainActivity : ComponentActivity() {
                                         }
 
                                         // User register view
-                                        composable("register") {
-                                            RegisterScreen {
-                                                navController.navigate("home")
-                                            }
+                                        composable("profile") {
+                                            ProfileScreen(
+                                                userData = googleAuthUiClient.getSignedInUser(),
+                                                onSignOut = {
+                                                    lifecycleScope.launch {
+                                                        googleAuthUiClient.signOut()
+                                                        Toast.makeText(
+                                                            applicationContext,
+                                                            "Sign out successful",
+                                                            Toast.LENGTH_LONG
+                                                        ).show()
+                                                        navController.popBackStack()
+                                                    }
+                                                }
+                                            )
                                         }
                                     }
                                 }
