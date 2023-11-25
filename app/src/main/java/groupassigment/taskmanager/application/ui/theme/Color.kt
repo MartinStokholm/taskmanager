@@ -1,4 +1,4 @@
-package groupassigment.taskmanager.application.ui.theme
+package com.notes.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
