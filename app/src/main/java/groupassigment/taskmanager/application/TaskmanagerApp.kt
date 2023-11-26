@@ -22,7 +22,6 @@ import groupassigment.taskmanager.application.screens.splash.SplashScreen
 import groupassigment.taskmanager.application.ui.theme.TaskmanagerTheme
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun TaskmanagerApp() {
     TaskmanagerTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
@@ -60,7 +59,7 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
         arguments = listOf(navArgument(TASK_ID) { defaultValue = TASK_DEFAULT_ID })
     ) {
         TaskScreen(
-            noteId = it.arguments?.getString(TASK_ID) ?: TASK_DEFAULT_ID,
+            taskId = it.arguments?.getString(TASK_ID) ?: TASK_DEFAULT_ID,
             popUpScreen = { appState.popUp() },
             restartApp = { route -> appState.clearAndNavigate(route) }
         )

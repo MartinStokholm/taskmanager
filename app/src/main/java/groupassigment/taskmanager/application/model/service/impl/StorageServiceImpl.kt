@@ -1,5 +1,6 @@
 package groupassigment.taskmanager.application.model.service.impl
 
+import android.util.Log
 import com.google.firebase.firestore.ktx.dataObjects
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -17,11 +18,10 @@ class StorageServiceImpl @Inject constructor(private val auth: AccountService) :
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val tasks: Flow<List<Task>>
-        get() =
-            auth.currentUser.flatMapLatest { note ->
+        get() = auth.currentUser.flatMapLatest { task ->
                 Firebase.firestore
                     .collection(TASKS_COLLECTION)
-                    .whereEqualTo(USER_ID_FIELD, note?.id)
+                    .whereEqualTo(USER_ID_FIELD, task?.id)
                     .dataObjects()
             }
 

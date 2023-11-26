@@ -5,7 +5,7 @@ const val TASK_SCREEN = "TaskScreen"
 const val SIGN_IN_SCREEN = "SignInScreen"
 const val SIGN_UP_SCREEN = "SignUpScreen"
 const val SPLASH_SCREEN = "SplashScreen"
-
+const val MAP_SCREEN = "MapScreen"
 const val TASK_ID = "noteId"
 const val TASK_DEFAULT_ID = "-1"
 const val TASK_ID_ARG = "?$TASK_ID={$TASK_ID}"

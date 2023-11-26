@@ -6,17 +6,23 @@ private const val TITLE_MAX_SIZE = 30
 
 data class Task(
     @DocumentId val id: String = "",
-    val text: String = "",
+    val name: String = "",
     val description: String = "",
     val dueDate: String = "",
     val priority: String = "",
-    val status: String = "",
+    val isDone: Boolean = false,
     val createdAt: String = "",
+    val lat: Double = 42.0,
+    val lng: Double = 69.0,
     val userId: String = ""
 )
 
 fun Task.getTitle(): String {
-    val isLongText = this.text.length > TITLE_MAX_SIZE
-    val endRange = if (isLongText) TITLE_MAX_SIZE else this.text.length - 1
-    return this.text.substring(IntRange(0, endRange))
+    val isLongText = this.name.length > TITLE_MAX_SIZE
+    val endRange = if (isLongText) TITLE_MAX_SIZE else this.name.length - 1
+    return this.name.substring(IntRange(0, endRange))
+}
+
+fun Task.getIsDone(): String {
+    return if (this.isDone) "✅" else "❌"
 }

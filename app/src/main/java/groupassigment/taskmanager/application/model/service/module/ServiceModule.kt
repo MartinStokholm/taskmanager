@@ -1,4 +1,4 @@
-package com.notes.app.model.service.module
+package groupassigment.taskmanager.application.model.service.module
 
 import groupassigment.taskmanager.application.model.service.AccountService
 import groupassigment.taskmanager.application.model.service.StorageService
