@@ -16,11 +16,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -40,6 +39,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import groupassigment.taskmanager.application.model.Task
+import groupassigment.taskmanager.application.model.getCompleted
 import groupassigment.taskmanager.application.model.getTitle
 
 @Composable
@@ -68,15 +68,6 @@ fun TaskScreen(
                 IconButton(onClick = { viewModel.deleteTask(popUpScreen) }) {
                     Icon(Icons.Filled.Delete, "Delete task")
                 }
-                Checkbox(
-                    checked = task.value.isDone,
-                    onCheckedChange = { viewModel.setTaskIsDone(true) },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = Color.Green, // Customize the color when checked
-                        uncheckedColor = Color.Red, // Customize the color when unchecked
-                        checkmarkColor = Color.White // Customize the color of the checkmark
-                    )
-                )
             }
         )
         Spacer(
@@ -114,8 +105,12 @@ fun TaskScreen(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                Text(text = "Done? ${task.value.isDone}")
-
+                Text(text = "Is Done: ")
+                Text(
+                    text = task.value.getCompleted(),
+                    modifier = Modifier.padding(12.dp, 12.dp, 12.dp, 12.dp),
+                    style = MaterialTheme.typography.bodyLarge
+                )
                 Spacer(modifier = Modifier.width(8.dp))
             }
             Row(
@@ -174,7 +169,7 @@ fun TaskScreen(
             )
             // Created At Text
             Text(
-                text = "Created At: ${task.value.createdAt}",
+                text = "Created on: ${task.value.createdAt}",
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(8.dp)
@@ -193,12 +188,14 @@ fun TaskScreen(
 
 @Composable
 fun DisplayOnMap(task: Task) {
-    val taskLocation = LatLng(task.lat ,task.lng)
+    val taskLocation = LatLng(task.location.latitude, task.location.longitude)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(taskLocation, 10f)
     }
     GoogleMap(
-        modifier = Modifier.fillMaxSize().height(300.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .height(300.dp),
         cameraPositionState = cameraPositionState
     ) {
         Marker(

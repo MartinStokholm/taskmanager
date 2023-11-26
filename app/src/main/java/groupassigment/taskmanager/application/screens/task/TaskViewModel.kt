@@ -64,7 +64,7 @@ class TaskViewModel @Inject constructor(
     }
 
     fun setTaskIsDone(it: Boolean) {
-        task.value = task.value.copy(isDone = it)
+        task.value = task.value.copy(completed = it)
     }
 
     fun updateTaskPriority(it: String) {
@@ -82,13 +82,6 @@ class TaskViewModel @Inject constructor(
         private val DEFAULT_TASK = Task(
             id = TASK_DEFAULT_ID,
             createdAt = getCreatedAt(),
-            description = "I really need to to this thing at this place",
-            isDone = false,
-            dueDate = " 25-11-2023",
-            lat = 42.0,
-            lng = 69.0,
-            priority = "MEDIUM",
-            name = "Important task",
         )
     }
 }

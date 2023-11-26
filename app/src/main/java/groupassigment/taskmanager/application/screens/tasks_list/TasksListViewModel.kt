@@ -14,10 +14,9 @@ import javax.inject.Inject
 @HiltViewModel
 class TasksListViewModel @Inject constructor(
     private val accountService: AccountService,
-    storageService: StorageService
+    private val storageService: StorageService
 ) : TaskmanagerAppViewModel() {
     val tasks = storageService.tasks
-
     fun initialize(restartApp: (String) -> Unit) {
         launchCatching {
             accountService.currentUser.collect { user ->
@@ -42,6 +41,12 @@ class TasksListViewModel @Inject constructor(
     fun onDeleteAccountClick() {
         launchCatching {
             accountService.deleteAccount()
+        }
+    }
+
+    fun onSetTaskCompleted(task: Task) {
+        launchCatching {
+            storageService.updateTask(task.copy(completed = !task.completed))
         }
     }
 }

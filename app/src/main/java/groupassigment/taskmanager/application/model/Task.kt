@@ -1,20 +1,20 @@
 package groupassigment.taskmanager.application.model
 
 import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.GeoPoint
 
 private const val TITLE_MAX_SIZE = 30
 
 data class Task(
     @DocumentId val id: String = "",
-    val name: String = "",
-    val description: String = "",
-    val dueDate: String = "",
-    val priority: String = "",
-    val isDone: Boolean = false,
+    val name: String = "An important task",
+    val description: String = "Description of the task",
+    val dueDate: String = "28/11/2023",
+    val priority: String = "High",
+    val completed: Boolean = false,
+    var location: GeoPoint = GeoPoint(56.0, 10.0),
     val createdAt: String = "",
-    val lat: Double = 42.0,
-    val lng: Double = 69.0,
-    val userId: String = ""
+    val userId: String = "",
 )
 
 fun Task.getTitle(): String {
@@ -23,6 +23,10 @@ fun Task.getTitle(): String {
     return this.name.substring(IntRange(0, endRange))
 }
 
-fun Task.getIsDone(): String {
-    return if (this.isDone) "✅" else "❌"
+fun Task.getCompleted(): String {
+    return if (this.completed) "✅" else "❌"
+}
+
+fun Task.setCompleted(completed: Boolean): Task {
+    return this.copy(completed = completed)
 }
