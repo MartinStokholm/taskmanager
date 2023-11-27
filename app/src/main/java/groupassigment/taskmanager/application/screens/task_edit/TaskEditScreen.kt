@@ -78,16 +78,16 @@ fun TaskEditScreen(
             EditableTextField("Description", task.value.description) { viewModel.updateDescription(it) }
             EditableTextField("Due Date", task.value.dueDate) { viewModel.updateDueDate(it) }
             DoubleInputField(
-                label = "Longitude",
-                value = task.value.location.longitude,
-                onValueChange = { viewModel.updateLocationLong(it) },
+                label = "Latitude",
+                value = task.value.location.latitude,
+                onValueChange = { viewModel.updateLocationLat(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp))
             DoubleInputField(
-                label = "Latitude",
-                value = task.value.location.latitude,
-                onValueChange = { viewModel.updateLocationLat(it) },
+                label = "Longitude",
+                value = task.value.location.longitude,
+                onValueChange = { viewModel.updateLocationLong(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp))

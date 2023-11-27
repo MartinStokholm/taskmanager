@@ -88,7 +88,7 @@ class TaskViewModel @Inject constructor(
 
     fun updateLocationLong(it: Double) {
         launchCatching {
-        task.value = task.value.copy(location = GeoPoint(task.value.location.latitude, it))
+            task.value = task.value.copy(location = GeoPoint(task.value.location.latitude, it))
         }
     }
 

@@ -121,7 +121,7 @@ fun TaskScreen(
             Spacer(modifier = Modifier.padding(8.dp))
 
             Text(
-                text = "⭐What to do⭐",
+                text = "⭐ What to do ⭐",
                 modifier = Modifier
                     .padding(12.dp, 12.dp, 12.dp, 12.dp),
                 style = MaterialTheme.typography.bodyLarge)
@@ -133,7 +133,7 @@ fun TaskScreen(
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = "⏰ When to be ⏰",
+                text = "⏰ When to do ⏰",
                 modifier = Modifier
                     .padding(12.dp, 12.dp, 12.dp, 12.dp),
                 style = MaterialTheme.typography.bodyLarge)
@@ -145,7 +145,7 @@ fun TaskScreen(
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = "📌 Where to be📌",
+                text = "📌 Where to do📌",
                 modifier = Modifier
                     .padding(12.dp, 12.dp, 12.dp, 12.dp),
                 style = MaterialTheme.typography.bodyLarge)
