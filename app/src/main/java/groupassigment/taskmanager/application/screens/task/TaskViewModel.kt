@@ -1,6 +1,7 @@
 package groupassigment.taskmanager.application.screens.task
 
 import android.util.Log
+import com.google.firebase.firestore.GeoPoint
 import groupassigment.taskmanager.application.TASK_DEFAULT_ID
 import groupassigment.taskmanager.application.SPLASH_SCREEN
 import groupassigment.taskmanager.application.model.service.AccountService
@@ -77,6 +78,22 @@ class TaskViewModel @Inject constructor(
 
     fun updateDueDate(it: String) {
         task.value = task.value.copy(dueDate = it)
+    }
+
+    fun updateLocationLat(it: Double) {
+        launchCatching {
+            task.value = task.value.copy(location = GeoPoint(it, task.value.location.longitude))
+        }
+    }
+
+    fun updateLocationLong(it: Double) {
+        launchCatching {
+        task.value = task.value.copy(location = GeoPoint(task.value.location.latitude, it))
+        }
+    }
+
+    fun updateLocation(it: GeoPoint) {
+        task.value = task.value.copy(location = it)
     }
 
     companion object {

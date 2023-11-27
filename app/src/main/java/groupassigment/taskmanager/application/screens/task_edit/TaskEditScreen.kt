@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -17,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import groupassigment.taskmanager.application.model.getTitle
@@ -42,7 +46,7 @@ fun TaskEditScreen(
     LaunchedEffect(Unit) { viewModel.initialize(taskId, restartApp) }
 
     Column(modifier = Modifier
-        .background(Color.LightGray) // Set your desired background color here
+        .background(Color.White) // Set your desired background color here
         .fillMaxWidth()
         .fillMaxHeight()) {
         TopAppBar(
@@ -61,9 +65,9 @@ fun TaskEditScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
         )
-
         Column(
             modifier = modifier
+                .padding(8.dp)
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .verticalScroll(rememberScrollState()),
@@ -73,6 +77,20 @@ fun TaskEditScreen(
             EditableTextField("Priority", task.value.priority) { viewModel.updatePriority(it) }
             EditableTextField("Description", task.value.description) { viewModel.updateDescription(it) }
             EditableTextField("Due Date", task.value.dueDate) { viewModel.updateDueDate(it) }
+            DoubleInputField(
+                label = "Longitude",
+                value = task.value.location.longitude,
+                onValueChange = { viewModel.updateLocationLong(it) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp))
+            DoubleInputField(
+                label = "Latitude",
+                value = task.value.location.latitude,
+                onValueChange = { viewModel.updateLocationLat(it) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp))
         }
     }
 }
@@ -90,5 +108,26 @@ private fun EditableTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
+    )
+}
+
+@Composable
+fun DoubleInputField(
+    label: String,
+    value: Double,
+    onValueChange: (Double) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    TextField(
+        value = value.toString(),
+        onValueChange = {
+            val doubleValue = it.toDoubleOrNull() ?: 0.0
+            onValueChange(doubleValue)
+        },
+        label = { Text(label) },
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Number
+        ),
+        modifier = modifier
     )
 }

@@ -3,7 +3,7 @@ package groupassigment.taskmanager.application.model
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.GeoPoint
 
-private const val TITLE_MAX_SIZE = 30
+private const val TITLE_MAX_SIZE = 20
 
 data class Task(
     @DocumentId val id: String = "",
