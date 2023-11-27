@@ -107,6 +107,7 @@ fun TasksListScreen(
                     .fillMaxHeight()
             ) {
                 LazyColumn {
+                    // Check if any tasks exists
                     if (tasks.isEmpty()) {
                         item {
                             Text(
@@ -116,6 +117,18 @@ fun TasksListScreen(
                             )
                         }
                     }
+                    // Check if no task is marked as not completed
+                    if (tasks.none { !it.completed }) {
+                        item {
+                            Text(
+                                text = "All tasks completed, create a new one by pressing the + " +
+                                        "button",
+                                modifier = Modifier.padding(12.dp, 12.dp, 12.dp, 12.dp),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                    }
+
                     items(tasks, key = { it.id }) { taskItem ->
                         if (!taskItem.completed){
                             TaskItem(

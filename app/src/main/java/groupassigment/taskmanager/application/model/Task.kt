@@ -3,7 +3,7 @@ package groupassigment.taskmanager.application.model
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.GeoPoint
 
-private const val TITLE_MAX_SIZE = 20
+private const val TITLE_MAX_SIZE = 10
 
 data class Task(
     @DocumentId val id: String = "",
@@ -20,5 +20,5 @@ data class Task(
 fun Task.getTitle(): String {
     val isLongText = this.name.length > TITLE_MAX_SIZE
     val endRange = if (isLongText) TITLE_MAX_SIZE else this.name.length - 1
-    return this.name.substring(IntRange(0, endRange))
+    return (this.name.substring(IntRange(0, endRange)) + ". . .")
 }

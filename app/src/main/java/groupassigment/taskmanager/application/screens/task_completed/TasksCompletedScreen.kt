@@ -67,7 +67,7 @@ fun TasksCompletedScreen(
             .fillMaxWidth()
             .fillMaxHeight()) {
                 TopAppBar(
-                    title = { Text("Completed tasks") },
+                    title = { Text("${tasks.count() } Completed tasks") },
                 )
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
