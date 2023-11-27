@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import groupassigment.taskmanager.application.ui.theme.TaskmanagerTheme
-import com.notes.app.ui.theme.Purple40
+import com.notes.app.ui.theme.Green
 import groupassigment.taskmanager.application.R
 
 @Composable
@@ -57,7 +57,7 @@ fun SignUpScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.mipmap.auth_image),
+            painter = painterResource(id = R.mipmap.green_robot),
             contentDescription = "Auth image",
             modifier = modifier
                 .fillMaxWidth()
@@ -74,7 +74,7 @@ fun SignUpScreen(
                 .fillMaxWidth()
                 .padding(16.dp, 4.dp)
                 .border(
-                    BorderStroke(width = 2.dp, color = Purple40),
+                    BorderStroke(width = 2.dp, color = Green),
                     shape = RoundedCornerShape(50)
                 ),
             colors = TextFieldDefaults.textFieldColors(
@@ -94,7 +94,7 @@ fun SignUpScreen(
                 .fillMaxWidth()
                 .padding(16.dp, 4.dp)
                 .border(
-                    BorderStroke(width = 2.dp, color = Purple40),
+                    BorderStroke(width = 2.dp, color = Green),
                     shape = RoundedCornerShape(50)
                 ),
             colors = TextFieldDefaults.textFieldColors(
@@ -115,7 +115,7 @@ fun SignUpScreen(
                 .fillMaxWidth()
                 .padding(16.dp, 4.dp)
                 .border(
-                    BorderStroke(width = 2.dp, color = Purple40),
+                    BorderStroke(width = 2.dp, color = Green),
                     shape = RoundedCornerShape(50)
                 ),
             colors = TextFieldDefaults.textFieldColors(

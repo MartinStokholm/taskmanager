@@ -60,6 +60,7 @@ fun TasksCompletedScreen(
         }
     ) {
         val tasks by viewModel.tasks.collectAsState(emptyList())
+        var tasksCompleted = tasks.filter { it.completed }
         var showExitAppDialog by remember { mutableStateOf(false) }
         var showRemoveAccDialog by remember { mutableStateOf(false) }
 
@@ -67,7 +68,7 @@ fun TasksCompletedScreen(
             .fillMaxWidth()
             .fillMaxHeight()) {
                 TopAppBar(
-                    title = { Text("${tasks.count() } Completed tasks") },
+                    title = { Text("${tasksCompleted.count() } Completed tasks") },
                 )
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
