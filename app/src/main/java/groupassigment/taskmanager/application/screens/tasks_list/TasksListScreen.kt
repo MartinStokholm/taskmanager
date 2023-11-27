@@ -2,7 +2,6 @@ package groupassigment.taskmanager.application.screens.tasks_list
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,8 +18,6 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -49,8 +46,6 @@ import groupassigment.taskmanager.application.ui.theme.TaskmanagerTheme
 import com.notes.app.ui.theme.PurpleGrey40
 import groupassigment.taskmanager.application.R
 import groupassigment.taskmanager.application.model.Task
-import groupassigment.taskmanager.application.model.setCompleted
-import groupassigment.taskmanager.application.screens.task.TaskViewModel
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

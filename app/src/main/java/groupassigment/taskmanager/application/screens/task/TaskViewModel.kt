@@ -7,6 +7,9 @@ import groupassigment.taskmanager.application.model.service.AccountService
 import groupassigment.taskmanager.application.model.service.StorageService
 import groupassigment.taskmanager.application.screens.TaskmanagerAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import groupassigment.taskmanager.application.TASK_EDIT_SCREEN
+import groupassigment.taskmanager.application.TASK_ID
+import groupassigment.taskmanager.application.TASK_SCREEN
 import groupassigment.taskmanager.application.model.Task
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.text.SimpleDateFormat
@@ -55,20 +58,25 @@ class TaskViewModel @Inject constructor(
         popUpScreen()
     }
 
-    fun updateTaskName(newText: String) {
-        task.value = task.value.copy(name = newText)
+    fun onEditClick(openScreen: (String) -> Unit, task: Task) {
+        openScreen("$TASK_EDIT_SCREEN?$TASK_ID=${task.id}")
     }
 
-    fun updateTaskDescription(newText: String) {
-        task.value = task.value.copy(description = newText)
+    fun updateName(it: String) {
+        task.value = task.value.copy(name = it)
     }
 
-    fun setTaskIsDone(it: Boolean) {
-        task.value = task.value.copy(completed = it)
-    }
-
-    fun updateTaskPriority(it: String) {
+    fun updatePriority(it: String) {
         task.value = task.value.copy(priority = it)
+    }
+
+    fun updateDescription(it: String) {
+        task.value = task.value.copy(description = it)
+    }
+
+
+    fun updateDueDate(it: String) {
+        task.value = task.value.copy(dueDate = it)
     }
 
     companion object {

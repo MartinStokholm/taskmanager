@@ -1,7 +1,6 @@
 package groupassigment.taskmanager.application
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -19,6 +18,7 @@ import groupassigment.taskmanager.application.screens.tasks_list.TasksListScreen
 import groupassigment.taskmanager.application.screens.sign_in.SignInScreen
 import groupassigment.taskmanager.application.screens.sign_up.SignUpScreen
 import groupassigment.taskmanager.application.screens.splash.SplashScreen
+import groupassigment.taskmanager.application.screens.task_edit.TaskEditScreen
 import groupassigment.taskmanager.application.ui.theme.TaskmanagerTheme
 
 @Composable
@@ -53,6 +53,16 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
             openScreen = { route -> appState.navigate(route) }
         )
     }
+    composable(
+        route ="$TASK_EDIT_SCREEN$TASK_ID_ARG",
+        arguments = listOf(navArgument(TASK_ID) { defaultValue = TASK_DEFAULT_ID })
+    ) {
+        TaskEditScreen(
+            taskId = it.arguments?.getString(TASK_ID) ?: TASK_DEFAULT_ID,
+            popUpScreen = { appState.popUp() },
+            restartApp = { route -> appState.clearAndNavigate(route) }
+        )
+    }
 
     composable(
         route = "$TASK_SCREEN$TASK_ID_ARG",
@@ -61,6 +71,7 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
         TaskScreen(
             taskId = it.arguments?.getString(TASK_ID) ?: TASK_DEFAULT_ID,
             popUpScreen = { appState.popUp() },
+            openScreen = { route: String -> appState.navigate(route) },
             restartApp = { route -> appState.clearAndNavigate(route) }
         )
     }

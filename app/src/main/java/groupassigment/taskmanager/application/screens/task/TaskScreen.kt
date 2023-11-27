@@ -14,15 +14,14 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,7 +38,6 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import groupassigment.taskmanager.application.model.Task
-import groupassigment.taskmanager.application.model.getCompleted
 import groupassigment.taskmanager.application.model.getTitle
 
 @Composable
@@ -47,23 +45,28 @@ import groupassigment.taskmanager.application.model.getTitle
 fun TaskScreen(
     taskId: String,
     popUpScreen: () -> Unit,
+    openScreen: (String) -> Unit,
     restartApp: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TaskViewModel = hiltViewModel()
+    viewModel: TaskViewModel = hiltViewModel(),
 ) {
     val task = viewModel.task.collectAsState()
 
     LaunchedEffect(Unit) { viewModel.initialize(taskId, restartApp) }
 
     Column(modifier = Modifier
-        .background(Color.LightGray) // Set your desired background color here
+        .background(Color.White) // Set your desired background color
+        // here
         .fillMaxWidth()
         .fillMaxHeight()) {
         TopAppBar(
             title = { Text(task.value.getTitle()) },
             actions = {
-                IconButton(onClick = { viewModel.saveTask(popUpScreen) }) {
-                    Icon(Icons.Filled.Done, "Save task")
+                IconButton(onClick = { viewModel.onEditClick(openScreen, task.value)}) {
+                    Icon(Icons.Filled.Edit, "Edit task")
+                }
+                IconButton(onClick = { popUpScreen()}) {
+                    Icon(Icons.Filled.ArrowBack, "Go back")
                 }
                 IconButton(onClick = { viewModel.deleteTask(popUpScreen) }) {
                     Icon(Icons.Filled.Delete, "Delete task")
@@ -83,91 +86,72 @@ fun TaskScreen(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Task Name TextField with isDone
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
             ) {
-                TextField(
-                    value = task.value.name,
-                    onValueChange = { viewModel.updateTaskName(it) },
-                    modifier = modifier
-                        .weight(1f)
-                        .wrapContentHeight(),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
+                if (task.value.completed) {
+                    Text(
+                        text = "✅",
+                        modifier = Modifier
+                            .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                        style = MaterialTheme.typography.bodyLarge
                     )
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Text(text = "Is Done: ")
+                } else {
+                    if (task.value.priority == "High") {
+                        Text(
+                            text = "‼️‼️",
+                            modifier = Modifier
+                                .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                            style = MaterialTheme.typography.bodyLarge)
+                    }
+                    if (task.value.priority == "Medium") {
+                        Text(text = "‼️",
+                            modifier = Modifier
+                                .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                            style = MaterialTheme.typography.bodyLarge)
+                    }
+                    if (task.value.priority == "Low") {
+                        Text(text = "❗",
+                            modifier = Modifier
+                                .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                            style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
                 Text(
-                    text = task.value.getCompleted(),
-                    modifier = Modifier.padding(12.dp, 12.dp, 12.dp, 12.dp),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Spacer(modifier = Modifier.width(8.dp))
+                    text = "${task.value.name}",
+                    modifier = Modifier
+                        .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                    style = MaterialTheme.typography.bodyLarge)
+
+
             }
+            Spacer(modifier = Modifier.width(8.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                TextField(
-                    value = task.value.priority,
-                    onValueChange = { viewModel.updateTaskPriority(it) },
-                    modifier = modifier
-                        .weight(1f)
-                        .wrapContentHeight(),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                    )
-                )
 
                 Spacer(modifier = Modifier.width(8.dp))
-
                 Text(text = "Due on: ${task.value.dueDate}")
-
                 Spacer(modifier = Modifier.width(8.dp))
             }
-
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
             )
-
-            // Description TextField
             Text(
-                text = "Description: ",
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .wrapContentHeight()
-            )
-            TextField(
-                value = task.value.description,
-                onValueChange = { viewModel.updateTaskDescription(it) },
-                modifier = modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                )
-            )
-            // Created At Text
+                text = "What to do??",
+                modifier = Modifier
+                    .padding(12.dp, 12.dp, 12.dp, 12.dp),
+                style = MaterialTheme.typography.bodyLarge)
+
+            Text(
+                text = "⭐ ${task.value.description} ⭐",
+                modifier = Modifier
+                    .padding(12.dp, 12.dp, 12.dp, 12.dp),
+                style = MaterialTheme.typography.bodyLarge)
             Text(
                 text = "Created on: ${task.value.createdAt}",
                 modifier = modifier
@@ -175,7 +159,6 @@ fun TaskScreen(
                     .padding(8.dp)
                     .wrapContentHeight()
             )
-
             DisplayOnMap(task.value)
             Spacer(
                 modifier = Modifier
