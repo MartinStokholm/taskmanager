@@ -18,6 +18,7 @@ import groupassigment.taskmanager.application.screens.tasks_list.TasksListScreen
 import groupassigment.taskmanager.application.screens.sign_in.SignInScreen
 import groupassigment.taskmanager.application.screens.sign_up.SignUpScreen
 import groupassigment.taskmanager.application.screens.splash.SplashScreen
+import groupassigment.taskmanager.application.screens.task_completed.TasksCompletedScreen
 import groupassigment.taskmanager.application.screens.task_edit.TaskEditScreen
 import groupassigment.taskmanager.application.ui.theme.TaskmanagerTheme
 
@@ -51,6 +52,14 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
         TasksListScreen(
             restartApp = { route -> appState.clearAndNavigate(route) },
             openScreen = { route -> appState.navigate(route) }
+        )
+    }
+    composable(TASK_COMPLETED_SCREEN)
+    {
+        TasksCompletedScreen(
+            restartApp = { route -> appState.clearAndNavigate(route) },
+            openScreen = { route -> appState.navigate(route) },
+            popUpScreen = { appState.popUp() }
         )
     }
     composable(

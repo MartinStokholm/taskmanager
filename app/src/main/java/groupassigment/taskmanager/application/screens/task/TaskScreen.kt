@@ -62,11 +62,11 @@ fun TaskScreen(
         TopAppBar(
             title = { Text(task.value.getTitle()) },
             actions = {
-                IconButton(onClick = { viewModel.onEditClick(openScreen, task.value)}) {
-                    Icon(Icons.Filled.Edit, "Edit task")
-                }
                 IconButton(onClick = { popUpScreen()}) {
                     Icon(Icons.Filled.ArrowBack, "Go back")
+                }
+                IconButton(onClick = { viewModel.onEditClick(openScreen, task.value)}) {
+                    Icon(Icons.Filled.Edit, "Edit task")
                 }
                 IconButton(onClick = { viewModel.deleteTask(popUpScreen) }) {
                     Icon(Icons.Filled.Delete, "Delete task")
@@ -84,74 +84,75 @@ fun TaskScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
-            ) {
-                if (task.value.completed) {
-                    Text(
-                        text = "✅",
-                        modifier = Modifier
-                            .padding(12.dp, 12.dp, 0.dp, 12.dp),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                } else {
-                    if (task.value.priority == "High") {
-                        Text(
-                            text = "‼️‼️",
-                            modifier = Modifier
-                                .padding(12.dp, 12.dp, 0.dp, 12.dp),
-                            style = MaterialTheme.typography.bodyLarge)
-                    }
-                    if (task.value.priority == "Medium") {
-                        Text(text = "‼️",
-                            modifier = Modifier
-                                .padding(12.dp, 12.dp, 0.dp, 12.dp),
-                            style = MaterialTheme.typography.bodyLarge)
-                    }
-                    if (task.value.priority == "Low") {
-                        Text(text = "❗",
-                            modifier = Modifier
-                                .padding(12.dp, 12.dp, 0.dp, 12.dp),
-                            style = MaterialTheme.typography.bodyLarge)
-                    }
-                }
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            if (task.value.completed) {
                 Text(
-                    text = "${task.value.name}",
+                    text = "✅",
                     modifier = Modifier
                         .padding(12.dp, 12.dp, 0.dp, 12.dp),
-                    style = MaterialTheme.typography.bodyLarge)
-
-
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            } else {
+                if (task.value.priority == "High") {
+                    Text(
+                        text = "‼️‼️",
+                        modifier = Modifier
+                            .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                        style = MaterialTheme.typography.bodyLarge)
+                }
+                if (task.value.priority == "Medium") {
+                    Text(text = "‼️",
+                        modifier = Modifier
+                            .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                        style = MaterialTheme.typography.bodyLarge)
+                }
+                if (task.value.priority == "Low") {
+                    Text(text = "❗",
+                        modifier = Modifier
+                            .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                        style = MaterialTheme.typography.bodyLarge)
+                }
             }
+            Text(
+                text = "${task.value.name}",
+                modifier = Modifier
+                    .padding(12.dp, 12.dp, 0.dp, 12.dp),
+                style = MaterialTheme.typography.bodyLarge)
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            Text(
+                text = "⭐What to do⭐",
+                modifier = Modifier
+                    .padding(12.dp, 12.dp, 12.dp, 12.dp),
+                style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = " ${task.value.description}",
+                modifier = Modifier
+                    .padding(12.dp, 12.dp, 12.dp, 12.dp),
+                style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.width(8.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
 
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Due on: ${task.value.dueDate}")
-                Spacer(modifier = Modifier.width(8.dp))
-            }
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
             Text(
-                text = "What to do??",
+                text = "⏰ When to be ⏰",
+                modifier = Modifier
+                    .padding(12.dp, 12.dp, 12.dp, 12.dp),
+                style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = " ${task.value.dueDate}",
+                modifier = Modifier
+                    .padding(12.dp, 12.dp, 12.dp, 12.dp),
+                style = MaterialTheme.typography.bodyLarge)
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Text(
+                text = "📌 Where to be📌",
                 modifier = Modifier
                     .padding(12.dp, 12.dp, 12.dp, 12.dp),
                 style = MaterialTheme.typography.bodyLarge)
 
-            Text(
-                text = "⭐ ${task.value.description} ⭐",
-                modifier = Modifier
-                    .padding(12.dp, 12.dp, 12.dp, 12.dp),
-                style = MaterialTheme.typography.bodyLarge)
+            DisplayOnMap(task.value)
+            Spacer(modifier = Modifier.padding(8.dp))
+
             Text(
                 text = "Created on: ${task.value.createdAt}",
                 modifier = modifier
@@ -159,15 +160,11 @@ fun TaskScreen(
                     .padding(8.dp)
                     .wrapContentHeight()
             )
-            DisplayOnMap(task.value)
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
+            Spacer(modifier = Modifier.padding(8.dp))
         }
     }
 }
+
 
 @Composable
 fun DisplayOnMap(task: Task) {

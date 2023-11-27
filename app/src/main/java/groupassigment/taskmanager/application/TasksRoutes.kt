@@ -1,6 +1,7 @@
 package groupassigment.taskmanager.application
 
 const val TASK_LIST_SCREEN = "TasksListScreen"
+const val TASK_COMPLETED_SCREEN = "TaskCompletedScreen"
 const val TASK_EDIT_SCREEN = "TaskEditScreen"
 const val TASK_SCREEN = "TaskScreen"
 const val SIGN_IN_SCREEN = "SignInScreen"

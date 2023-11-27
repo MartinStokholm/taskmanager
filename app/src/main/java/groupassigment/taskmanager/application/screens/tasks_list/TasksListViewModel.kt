@@ -8,6 +8,7 @@ import groupassigment.taskmanager.application.model.service.AccountService
 import groupassigment.taskmanager.application.model.service.StorageService
 import groupassigment.taskmanager.application.screens.TaskmanagerAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import groupassigment.taskmanager.application.TASK_COMPLETED_SCREEN
 import groupassigment.taskmanager.application.model.Task
 import javax.inject.Inject
 
@@ -48,5 +49,9 @@ class TasksListViewModel @Inject constructor(
         launchCatching {
             storageService.updateTask(task.copy(completed = !task.completed))
         }
+    }
+
+    fun onStarClick(openScreen: (String) -> Unit) {
+        openScreen(TASK_COMPLETED_SCREEN)
     }
 }
