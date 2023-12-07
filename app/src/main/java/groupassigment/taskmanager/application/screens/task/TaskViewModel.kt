@@ -28,7 +28,6 @@ class TaskViewModel @Inject constructor(
         launchCatching {
             task.value = storageService.readTask(taskId) ?: DEFAULT_TASK
         }
-
         observeAuthenticationState(restartApp)
     }
 
@@ -75,7 +74,6 @@ class TaskViewModel @Inject constructor(
         task.value = task.value.copy(description = it)
     }
 
-
     fun updateDueDate(it: String) {
         task.value = task.value.copy(dueDate = it)
     }
@@ -90,10 +88,6 @@ class TaskViewModel @Inject constructor(
         launchCatching {
             task.value = task.value.copy(location = GeoPoint(task.value.location.latitude, it))
         }
-    }
-
-    fun updateLocation(it: GeoPoint) {
-        task.value = task.value.copy(location = it)
     }
 
     companion object {

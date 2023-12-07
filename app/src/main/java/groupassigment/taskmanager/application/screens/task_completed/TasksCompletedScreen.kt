@@ -61,8 +61,6 @@ fun TasksCompletedScreen(
     ) {
         val tasks by viewModel.tasks.collectAsState(emptyList())
         var tasksCompleted = tasks.filter { it.completed }
-        var showExitAppDialog by remember { mutableStateOf(false) }
-        var showRemoveAccDialog by remember { mutableStateOf(false) }
 
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -90,47 +88,6 @@ fun TasksCompletedScreen(
                  }
             }
         }
-            if (showExitAppDialog) {
-                AlertDialog(
-                    title = { Text(stringResource(R.string.sign_out_title)) },
-                    text = { Text(stringResource(R.string.sign_out_description)) },
-                    dismissButton = {
-                        Button(onClick = { showExitAppDialog = false }) {
-                            Text(text = stringResource(R.string.cancel))
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = {
-                            viewModel.onSignOutClick()
-                            showExitAppDialog = false
-                        }) {
-                            Text(text = stringResource(R.string.sign_out))
-                        }
-                    },
-                    onDismissRequest = { showExitAppDialog = false }
-                )
-            }
-
-            if (showRemoveAccDialog) {
-                AlertDialog(
-                    title = { Text(stringResource(R.string.delete_account_title)) },
-                    text = { Text(stringResource(R.string.delete_account_description)) },
-                    dismissButton = {
-                        Button(onClick = { showRemoveAccDialog = false }) {
-                            Text(text = stringResource(R.string.cancel))
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = {
-                            viewModel.onDeleteAccountClick()
-                            showRemoveAccDialog = false
-                        }) {
-                            Text(text = stringResource(R.string.delete_account))
-                        }
-                    },
-                    onDismissRequest = { showRemoveAccDialog = false }
-                )
-            }
     }
 }
 

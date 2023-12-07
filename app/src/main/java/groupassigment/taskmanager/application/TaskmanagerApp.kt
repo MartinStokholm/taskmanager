@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import groupassigment.taskmanager.application.screens.profile.ProfileScreen
 import groupassigment.taskmanager.application.screens.task.TaskScreen
 import groupassigment.taskmanager.application.screens.tasks_list.TasksListScreen
 import groupassigment.taskmanager.application.screens.sign_in.SignInScreen
@@ -54,6 +55,7 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
             openScreen = { route -> appState.navigate(route) }
         )
     }
+
     composable(TASK_COMPLETED_SCREEN)
     {
         TasksCompletedScreen(
@@ -62,6 +64,7 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
             popUpScreen = { appState.popUp() }
         )
     }
+
     composable(
         route ="$TASK_EDIT_SCREEN$TASK_ID_ARG",
         arguments = listOf(navArgument(TASK_ID) { defaultValue = TASK_DEFAULT_ID })
@@ -82,6 +85,14 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
             popUpScreen = { appState.popUp() },
             openScreen = { route: String -> appState.navigate(route) },
             restartApp = { route -> appState.clearAndNavigate(route) }
+        )
+    }
+
+    composable(PROFILE_SCREEN) {
+        ProfileScreen(
+            openScreen = { route: String -> appState.navigate(route) },
+            restartApp = { route -> appState.clearAndNavigate(route) },
+            popUpScreen = { appState.popUp() }
         )
     }
 

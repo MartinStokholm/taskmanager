@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -72,8 +73,6 @@ fun TasksListScreen(
         }
     ) {
         val tasks by viewModel.tasks.collectAsState(emptyList())
-        var showExitAppDialog by remember { mutableStateOf(false) }
-        var showRemoveAccDialog by remember { mutableStateOf(false) }
 
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -81,18 +80,8 @@ fun TasksListScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.app_name)) },
                 actions = {
-                    IconButton(onClick = { viewModel.onStarClick(openScreen) }) {
-                        Icon(Icons.Filled.Star, "See Completed task")
-                    }
-                    IconButton(onClick = { showExitAppDialog = true }) {
-                        Icon(Icons.Filled.ExitToApp, "Exit app")
-                    }
-                    IconButton(onClick = { showRemoveAccDialog = true }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.person_remove),
-                            contentDescription = "Remove account",
-                            tint = PurpleGrey40
-                        )
+                    IconButton(onClick = { viewModel.onProfileClick(openScreen) }) {
+                        Icon(Icons.Filled.Person, "My profile")
                     }
                 }
             )
@@ -139,48 +128,6 @@ fun TasksListScreen(
 
                     }
                 }
-            }
-
-            if (showExitAppDialog) {
-                AlertDialog(
-                    title = { Text(stringResource(R.string.sign_out_title)) },
-                    text = { Text(stringResource(R.string.sign_out_description)) },
-                    dismissButton = {
-                        Button(onClick = { showExitAppDialog = false }) {
-                            Text(text = stringResource(R.string.cancel))
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = {
-                            viewModel.onSignOutClick()
-                            showExitAppDialog = false
-                        }) {
-                            Text(text = stringResource(R.string.sign_out))
-                        }
-                    },
-                    onDismissRequest = { showExitAppDialog = false }
-                )
-            }
-
-            if (showRemoveAccDialog) {
-                AlertDialog(
-                    title = { Text(stringResource(R.string.delete_account_title)) },
-                    text = { Text(stringResource(R.string.delete_account_description)) },
-                    dismissButton = {
-                        Button(onClick = { showRemoveAccDialog = false }) {
-                            Text(text = stringResource(R.string.cancel))
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = {
-                            viewModel.onDeleteAccountClick()
-                            showRemoveAccDialog = false
-                        }) {
-                            Text(text = stringResource(R.string.delete_account))
-                        }
-                    },
-                    onDismissRequest = { showRemoveAccDialog = false }
-                )
             }
         }
     }

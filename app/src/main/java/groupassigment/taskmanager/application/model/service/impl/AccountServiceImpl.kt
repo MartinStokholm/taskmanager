@@ -12,7 +12,6 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AccountServiceImpl @Inject constructor() : AccountService {
-
     override val currentUser: Flow<User?>
         get() = callbackFlow {
             val listener =
@@ -22,6 +21,9 @@ class AccountServiceImpl @Inject constructor() : AccountService {
             Firebase.auth.addAuthStateListener(listener)
             awaitClose { Firebase.auth.removeAuthStateListener(listener) }
         }
+
+    override val currentUserEmail: String
+        get() = Firebase.auth.currentUser?.email.orEmpty()
 
     override val currentUserId: String
         get() = Firebase.auth.currentUser?.uid.orEmpty()

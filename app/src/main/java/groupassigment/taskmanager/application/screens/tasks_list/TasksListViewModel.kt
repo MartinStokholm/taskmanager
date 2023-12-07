@@ -8,6 +8,7 @@ import groupassigment.taskmanager.application.model.service.AccountService
 import groupassigment.taskmanager.application.model.service.StorageService
 import groupassigment.taskmanager.application.screens.TaskmanagerAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import groupassigment.taskmanager.application.PROFILE_SCREEN
 import groupassigment.taskmanager.application.TASK_COMPLETED_SCREEN
 import groupassigment.taskmanager.application.model.Task
 import javax.inject.Inject
@@ -18,6 +19,7 @@ class TasksListViewModel @Inject constructor(
     private val storageService: StorageService
 ) : TaskmanagerAppViewModel() {
     val tasks = storageService.tasks
+
     fun initialize(restartApp: (String) -> Unit) {
         launchCatching {
             accountService.currentUser.collect { user ->
@@ -25,6 +27,7 @@ class TasksListViewModel @Inject constructor(
             }
         }
     }
+
     fun onAddClick(openScreen: (String) -> Unit) {
         openScreen("$TASK_SCREEN?$TASK_ID=$TASK_DEFAULT_ID")
     }
@@ -33,25 +36,13 @@ class TasksListViewModel @Inject constructor(
         openScreen("$TASK_SCREEN?$TASK_ID=${task.id}")
     }
 
-    fun onSignOutClick() {
-        launchCatching {
-            accountService.signOut()
-        }
-    }
-
-    fun onDeleteAccountClick() {
-        launchCatching {
-            accountService.deleteAccount()
-        }
-    }
-
     fun onSetTaskCompleted(task: Task) {
         launchCatching {
             storageService.updateTask(task.copy(completed = !task.completed))
         }
     }
 
-    fun onStarClick(openScreen: (String) -> Unit) {
-        openScreen(TASK_COMPLETED_SCREEN)
+    fun onProfileClick(openScreen: (String) -> Unit) {
+        openScreen(PROFILE_SCREEN)
     }
 }
