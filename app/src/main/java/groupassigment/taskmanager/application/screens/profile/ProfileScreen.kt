@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -26,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -97,9 +100,31 @@ fun ProfileScreen(
                     Text(
                         text = "Email: ${viewModel.getUserEmail()}"
                     )
-                    Text (
-                        text = "Here could be more user information if available"
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "Random Chuck Norris Joke:"
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    // Display Chuck Norris joke
+                    Text(
+                        text = viewModel.chuckNorrisJoke.value?.value ?: "Loading joke...",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally)
+                            .wrapContentHeight()
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Refresh button for Chuck Norris joke
+                    Button(
+                        onClick = { viewModel.getJoke() },
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        Text("Refresh Joke")
+                    }
                 }
             }
 
