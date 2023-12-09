@@ -11,7 +11,3 @@ const val SPLASH_SCREEN = "SplashScreen"
 const val TASK_ID = "noteId"
 const val TASK_DEFAULT_ID = "-1"
 const val TASK_ID_ARG = "?$TASK_ID={$TASK_ID}"
-
-const val LOCALHOST = "10.0.2.2"
-const val AUTH_PORT = 9099
-const val FIRESTORE_PORT = 8080

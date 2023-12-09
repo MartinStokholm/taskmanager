@@ -13,15 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class TaskmanagerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        configureFirebaseServices()
-
         setContent { TaskmanagerApp() }
-    }
-
-    private fun configureFirebaseServices() {
-        if (BuildConfig.DEBUG) {
-            Firebase.auth.useEmulator(LOCALHOST, AUTH_PORT)
-            Firebase.firestore.useEmulator(LOCALHOST, FIRESTORE_PORT)
-        }
     }
 }
