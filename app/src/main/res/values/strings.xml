@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tasks</string>
+    <string name="app_name">My tasks</string>
     <string name="authenticate">Authenticate</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

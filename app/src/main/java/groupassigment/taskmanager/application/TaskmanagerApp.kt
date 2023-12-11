@@ -71,7 +71,7 @@ fun NavGraphBuilder.notesGraph(appState: TaskmanagerAppState) {
     ) {
         TaskEditScreen(
             taskId = it.arguments?.getString(TASK_ID) ?: TASK_DEFAULT_ID,
-            popUpScreen = { appState.popUp() },
+            openScreen = { route -> appState.navigate(route) },
             restartApp = { route -> appState.clearAndNavigate(route) }
         )
     }

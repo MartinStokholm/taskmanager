@@ -62,13 +62,13 @@ fun TaskScreen(
         TopAppBar(
             title = { Text(task.value.getTitle()) },
             actions = {
-                IconButton(onClick = { viewModel.saveTask(popUpScreen)}) {
+                IconButton(onClick = { popUpScreen()}) {
                     Icon(Icons.Filled.ArrowBack, "Go back")
                 }
                 IconButton(onClick = { viewModel.onEditClick(openScreen, task.value)}) {
                     Icon(Icons.Filled.Edit, "Edit task")
                 }
-                IconButton(onClick = { viewModel.deleteTask(popUpScreen) }) {
+                IconButton(onClick = { viewModel.deleteTask(openScreen) }) {
                     Icon(Icons.Filled.Delete, "Delete task")
                 }
             }

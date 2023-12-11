@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,7 +36,7 @@ import groupassigment.taskmanager.application.screens.task.TaskViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 fun TaskEditScreen(
     taskId: String,
-    popUpScreen: () -> Unit,
+    openScreen: (String) -> Unit,
     restartApp: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = hiltViewModel()
@@ -46,16 +45,16 @@ fun TaskEditScreen(
     LaunchedEffect(Unit) { viewModel.initialize(taskId, restartApp) }
 
     Column(modifier = Modifier
-        .background(Color.White) // Set your desired background color here
+        .background(Color.White)
         .fillMaxWidth()
         .fillMaxHeight()) {
         TopAppBar(
             title = { Text(task.value.getTitle()) },
             actions = {
-                IconButton(onClick = { viewModel.saveTask(popUpScreen) }) {
+                IconButton(onClick = { viewModel.saveTask(openScreen) }) {
                     Icon(Icons.Filled.Done, "Save task")
                 }
-                IconButton(onClick = { viewModel.deleteTask(popUpScreen) }) {
+                IconButton(onClick = { viewModel.deleteTask(openScreen) }) {
                     Icon(Icons.Filled.Delete, "Delete task")
                 }
             }

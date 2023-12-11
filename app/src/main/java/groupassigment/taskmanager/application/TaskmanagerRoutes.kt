@@ -5,6 +5,7 @@ const val TASK_COMPLETED_SCREEN = "TaskCompletedScreen"
 const val TASK_EDIT_SCREEN = "TaskEditScreen"
 const val TASK_SCREEN = "TaskScreen"
 const val PROFILE_SCREEN = "ProfileScreen"
+
 const val SIGN_IN_SCREEN = "SignInScreen"
 const val SIGN_UP_SCREEN = "SignUpScreen"
 const val SPLASH_SCREEN = "SplashScreen"

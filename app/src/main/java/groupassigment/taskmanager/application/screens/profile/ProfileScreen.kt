@@ -103,13 +103,13 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = "Random Chuck Norris Joke:"
+                        text = "Inspirational quote:"
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
                     // Display Chuck Norris joke
                     Text(
-                        text = viewModel.chuckNorrisJoke.value?.value ?: "Loading joke...",
+                        text = viewModel.chuckNorrisJoke.value?.value ?: "Loading...",
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.CenterHorizontally)
@@ -123,7 +123,7 @@ fun ProfileScreen(
                         onClick = { viewModel.getJoke() },
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
-                        Text("Refresh Joke")
+                        Text("Refresh")
                     }
                 }
             }

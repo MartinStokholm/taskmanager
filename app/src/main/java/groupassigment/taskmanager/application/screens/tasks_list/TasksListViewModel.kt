@@ -10,6 +10,7 @@ import groupassigment.taskmanager.application.screens.TaskmanagerAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import groupassigment.taskmanager.application.PROFILE_SCREEN
 import groupassigment.taskmanager.application.TASK_COMPLETED_SCREEN
+import groupassigment.taskmanager.application.TASK_EDIT_SCREEN
 import groupassigment.taskmanager.application.model.Task
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class TasksListViewModel @Inject constructor(
     }
 
     fun onAddClick(openScreen: (String) -> Unit) {
-        openScreen("$TASK_SCREEN?$TASK_ID=$TASK_DEFAULT_ID")
+        openScreen("$TASK_EDIT_SCREEN?$TASK_ID=$TASK_DEFAULT_ID")
     }
 
     fun onTaskClick(openScreen: (String) -> Unit, task: Task) {

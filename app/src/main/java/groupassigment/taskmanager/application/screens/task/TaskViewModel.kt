@@ -10,6 +10,7 @@ import groupassigment.taskmanager.application.screens.TaskmanagerAppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import groupassigment.taskmanager.application.TASK_EDIT_SCREEN
 import groupassigment.taskmanager.application.TASK_ID
+import groupassigment.taskmanager.application.TASK_LIST_SCREEN
 import groupassigment.taskmanager.application.TASK_SCREEN
 import groupassigment.taskmanager.application.model.Task
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +40,7 @@ class TaskViewModel @Inject constructor(
         }
     }
 
-    fun saveTask(popUpScreen: () -> Unit) {
+    fun saveTask(openScreen: (String) -> Unit) {
         launchCatching {
             if (task.value.id == TASK_DEFAULT_ID) {
                 storageService.createTask(task.value)
@@ -48,14 +49,14 @@ class TaskViewModel @Inject constructor(
                 storageService.updateTask(task.value)
             }
         }
-        popUpScreen()
+        openScreen(TASK_LIST_SCREEN)
     }
 
-    fun deleteTask(popUpScreen: () -> Unit) {
+    fun deleteTask(openScreen: (String) -> Unit) {
         launchCatching {
             storageService.deleteTask(task.value.id)
         }
-        popUpScreen()
+        openScreen(TASK_LIST_SCREEN)
     }
 
     fun onEditClick(openScreen: (String) -> Unit, task: Task) {
